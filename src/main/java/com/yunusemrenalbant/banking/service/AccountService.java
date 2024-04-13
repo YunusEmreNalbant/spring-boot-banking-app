@@ -1,7 +1,9 @@
 package com.yunusemrenalbant.banking.service;
 
 import com.yunusemrenalbant.banking.dto.AccountDto;
+import com.yunusemrenalbant.banking.dto.TransactionDto;
 import com.yunusemrenalbant.banking.dto.TransferFundDto;
+import com.yunusemrenalbant.banking.entity.Transaction;
 
 import java.util.List;
 
@@ -20,4 +22,6 @@ public interface AccountService {
     void deleteAccount(Long id);
 
     void transferFunds(TransferFundDto transferFundDto);
+
+    List<TransactionDto> getAccountTransactions(Long accountId);
 }

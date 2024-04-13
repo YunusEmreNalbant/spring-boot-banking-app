@@ -1,6 +1,7 @@
 package com.yunusemrenalbant.banking.controller;
 
 import com.yunusemrenalbant.banking.dto.AccountDto;
+import com.yunusemrenalbant.banking.dto.TransactionDto;
 import com.yunusemrenalbant.banking.dto.TransferFundDto;
 import com.yunusemrenalbant.banking.service.AccountService;
 import org.springframework.http.HttpStatus;
@@ -70,5 +71,12 @@ public class AccountController {
     public ResponseEntity<String> transferFund(@RequestBody TransferFundDto transferFundDto) {
         accountService.transferFunds(transferFundDto);
         return ResponseEntity.ok("Transfer Successfull");
+    }
+
+    @GetMapping("/{id}/transactions")
+    public ResponseEntity<List<TransactionDto>> fetchAccountTransactions(@PathVariable("id") Long accountId) {
+        List<TransactionDto> transactions = accountService.getAccountTransactions(accountId);
+
+        return ResponseEntity.ok(transactions);
     }
 }
