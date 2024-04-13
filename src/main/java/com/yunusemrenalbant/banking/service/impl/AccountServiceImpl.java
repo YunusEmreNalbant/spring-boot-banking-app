@@ -1,6 +1,7 @@
 package com.yunusemrenalbant.banking.service.impl;
 
 import com.yunusemrenalbant.banking.dto.AccountDto;
+import com.yunusemrenalbant.banking.dto.TransferFundDto;
 import com.yunusemrenalbant.banking.entity.Account;
 import com.yunusemrenalbant.banking.exception.AccountException;
 import com.yunusemrenalbant.banking.mapper.AccountMapper;
@@ -83,5 +84,23 @@ public class AccountServiceImpl implements AccountService {
 
         accountRepository.deleteById(id);
 
+    }
+
+    @Override
+    public void transferFunds(TransferFundDto transferFundDto) {
+
+      Account fromAccount = accountRepository
+                .findById(transferFundDto.fromAccountId())
+                .orElseThrow(() -> new AccountException("Account does not exists"));
+
+      Account toAccount = accountRepository
+              .findById(transferFundDto.toAccountId())
+              .orElseThrow(() -> new AccountException("Account does not exists"));
+
+      fromAccount.setBalance(fromAccount.getBalance() - transferFundDto.amount());
+      toAccount.setBalance(toAccount.getBalance() + transferFundDto.amount());
+
+      accountRepository.save(fromAccount);
+      accountRepository.save(toAccount);
     }
 }
